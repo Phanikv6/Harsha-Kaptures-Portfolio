@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Harsha Kaptures</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="loginScreen">
+    <div class="theme-toggle-wrap theme-toggle-login">
+      <span class="theme-label" aria-hidden="true">☀️</span>
+      <label class="theme-slider">
+        <input type="checkbox" id="themeToggleLogin" aria-label="Dark mode">
+        <span class="slider-round"></span>
+      </label>
+      <span class="theme-label" aria-hidden="true">🌙</span>
+    </div>
+    <div class="login-box">
+      <h1>Admin Login</h1>
+      <form id="loginForm">
+        <input type="password" id="passwordInput" placeholder="Password" required autocomplete="current-password">
+        <button type="submit">Login</button>
+      </form>
+      <p id="loginError" class="error"></p>
+    </div>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <header class="admin-header">
+      <h1>Admin Panel</h1>
+      <div class="header-actions">
+        <div class="theme-toggle-wrap">
+          <span class="theme-label" aria-hidden="true">☀️</span>
+          <label class="theme-slider">
+            <input type="checkbox" id="themeToggleAdmin" aria-label="Dark mode">
+            <span class="slider-round"></span>
+          </label>
+          <span class="theme-label" aria-hidden="true">🌙</span>
+        </div>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <nav class="admin-tabs">
+      <button class="tab-btn active" data-tab="projects">Projects</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+      <button class="tab-btn" data-tab="submissions">Submissions</button>
+    </nav>
+
+    <main class="admin-content">
+      <section id="tab-projects" class="tab-pane active">
+        <div class="section-header">
+          <h2>Projects</h2>
+          <button id="addProjectBtn" class="btn btn-primary">+ Add Project</button>
+        </div>
+        <div id="projectsList"></div>
+      </section>
+
+      <section id="tab-settings" class="tab-pane">
+        <h2>View More</h2>
+        <div class="setting-row">
+          <label>
+            <input type="checkbox" id="viewMoreEnabled" checked>
+            Enable "View More" button (users see all projects when enabled)
+          </label>
+        </div>
+        <p class="hint">When disabled, only the first 6 projects are shown.</p>
+        <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+      </section>
+
+      <section id="tab-submissions" class="tab-pane">
+        <div class="section-header">
+          <h2>Submissions</h2>
+          <div class="export-btns">
+            <a id="downloadCsvBtn" class="btn btn-secondary" href="#" download="submissions.csv">Download CSV</a>
+            <a id="downloadXlsxBtn" class="btn btn-secondary" href="#" download="submissions.xlsx">Download XLSX</a>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <p id="submissionsLoading" class="submissions-loading hidden">Loading submissions…</p>
+          <table id="submissionsTable">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="projectModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="projectModalTitle">Add Project</h3>
+        <button class="modal-close" id="closeProjectModal">&times;</button>
+      </div>
+      <form id="projectForm">
+        <input type="hidden" id="projectId">
+        <div class="form-group">
+          <label for="projectTitle">Title *</label>
+          <input type="text" id="projectTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="projectDescription">Description</label>
+          <textarea id="projectDescription" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="projectCover">Cover Image URL *</label>
+          <div class="cover-image-toolbar">
+            <input type="text" id="projectCover" placeholder="https://... or /uploads/...">
+            <label class="btn btn-small">Upload
+              <input type="file" id="coverUpload" accept="image/*" style="display:none">
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Gallery Images</label>
+          <div class="images-toolbar">
+            <input type="text" id="newImageUrl" placeholder="Paste image URL">
+            <button type="button" id="addImageUrlBtn" class="btn btn-small">Add URL</button>
+            <label class="btn btn-small">Upload
+              <input type="file" id="imageUpload" multiple accept="image/*" style="display:none">
+            </label>
+          </div>
+          <ul id="projectImagesList"></ul>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="cancelProjectBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

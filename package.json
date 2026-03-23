@@ -1,0 +1,24 @@
+{
+  "name": "harsha-kaptures-website",
+  "engines": {
+    "node": ">=18"
+  },
+  "version": "1.0.0",
+  "description": "Photography portfolio with admin panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^7.1.0",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.6.1",
+    "xlsx": "^0.18.5"
+  }
+}
